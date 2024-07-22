@@ -12,27 +12,30 @@ Book.prototype.toggleRead = function()
     read = true ? read == false : false
 }
 
-function addBookToLibrary(book) {
-  library.push(book);
-}
 
-//show dialog
+//add eventListeners and get elements
+
 formButton = document.querySelector(".showFormButton")
 dialog = document.querySelector("dialog")
+deleteButton = document.querySelector(".deleteButton")
+changeReadButton = document.querySelector(".changeRead")
+addBookButton = document.querySelector(".addBookButton")
+bookForm = document.querySelector(".bookForm")
+booksContainer = document.querySelector(".booksContainer")
 
 formButton.addEventListener("click", showForm)
+deleteButton.addEventListener("click", deleteBook)
+changeReadButton.addEventListener("click", changeRead)
+addBookButton.addEventListener("click", addBook)
+
+
+//functions
 
 function showForm()
 {
     dialog.show()
 }
 
-//add book
-addBookButton = document.querySelector(".addBookButton")
-bookForm = document.querySelector(".bookForm")
-booksContainer = document.querySelector(".booksContainer")
-
-addBookButton.addEventListener("click", addBook)
 
 //add the book to the library array
 function addBook(e)
@@ -43,35 +46,73 @@ function addBook(e)
     author = bookForm.elements["author"].value
     nbOfPages = bookForm.elements["nbOfPages"].value
     read = bookForm.elements["read"].value
-
-    if(validInput(title, author, nbOfPages, read))
+    
+    if(validateInput(title, author, nbOfPages, read))
         {
-
+            
             book = new Book(title, author, nbOfPages, read)
-            addBookToLibrary(book)
-        }
+            library.push(book);
 
-    bookForm.reset()
-    dialog.close()
+            bookForm.reset()
+            dialog.close()
+        }
+    else
+    {
+        alert("wrong input")
+    }
+
+    showBooks();
+
 }
 
-//loop over the array and for each item create a row element and associate the index of the item with it
+//loop over the library and add book cards
 function showBooks()
 {
+    //remove the previous books to not duplicate them
+    let allBooks = Array.from(booksContainer.querySelectorAll(":scope > div:nth-child(n+3)"))
+    for(let i =0; i<allBooks.length; i++)
+        booksContainer.removeChild(allBooks[i])
+    
+    for(let i = 0; i <library.length; i++)
+        {
+            bookCard = booksContainer.querySelector("#bookCardStructure").cloneNode(true)
+
+            bookCard.setAttribute("data-attribute", i)
+            bookCard.querySelector(".title").textContent = library[i]['title']
+            bookCard.querySelector(".author").textContent = library[i]['author']
+            bookCard.querySelector(".pages").textContent = library[i]['pages']
+            bookCard.querySelector(".read").textContent = library[i]['read']
+
+            bookCard.style.display = "grid"
+            booksContainer.append(bookCard);
+        }
 }
 
 
-//take the index of the array from the tr then find it in the array and call the toggle read function on it and then change it on the td seperatly
-function changeReadStatus()
+//chnage read status of a book
+function changeRead(e)
 {
+    //change status in bookCard
+    book = e.target.parentElement.parentElement // changeButton => <div class ="options"> => <div class ="bookCard">
+    readStatus = book.querySelector(".read")
+    readStatus.textContent = "Yes" ? readStatus.textContent == "No" : "No"
 
+    //change status in library
+    bookIndex = book.getAttribute("data-attribute");
+    library[bookIndex].toggleRead()
 }
 
-//take the index of the array from the tr then find it in the array and delete it either using del or setting it to null
-// then call del on the tr
-function deleteBook()
-{
 
+function deleteBook(e)
+{
+    //delete book in the booksContainer
+    book = e.target.parentElement.parentElement // changeButton => <div class ="options"> => <div class ="bookCard">
+    booksContainer.removeChild(book)
+
+    //delete book in library
+    bookIndex = book.getAttribute("data-attribute");
+    library.splice(bookIndex, 1)
+    
 }
 
 function validateInput(title, author, nbOfPages, read)

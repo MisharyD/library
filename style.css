@@ -90,7 +90,7 @@ body
     background-color: #382f2f;
 }
 
-.deleteIcon:hover
+.deleteButton:hover
 {
     fill:rgb(194, 49, 49);
     cursor: pointer;
