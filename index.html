@@ -34,14 +34,15 @@
     <dialog>
         <form class = "bookForm">
             <div class = "inputAndLabelContainer">
+                <label for = "title">Title:</label>
+                <input id = "title" type="text" name = "title" >
+            </div>
+
+            <div class = "inputAndLabelContainer">
                 <label for="author">Author:</label>
                 <input id = "author" type="text" name = "author">
             </div>
 
-            <div class = "inputAndLabelContainer">
-                <label for = "title">Title:</label>
-                <input id = "title" type="text" name = "title" >
-            </div>
 
             <div class = "inputAndLabelContainer">
                 <label for="nbOfPages">Number of pages:</label>
@@ -52,9 +53,9 @@
                 <span>Read?</span>
                 <div>
                     <label for="yes">Yes</label>
-                    <input type = "radio" id = "yes" name = "read" value = true><br>
+                    <input type = "radio" id = "yes" name = "read" value = true ><br>
                     <label for="no">No</label>
-                    <input type = "radio" id = "no" name = "read" value = false>
+                    <input type = "radio" id = "no" name = "read" value = false checked>
                 </div>
             </div>
 

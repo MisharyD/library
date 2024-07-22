@@ -1,6 +1,6 @@
 const library = [];
 
-function Book(author, title, pages, read) {
+function Book(title, author, pages, read) {
   this.author = author;
   this.title = title;
   this.pages = pages;
@@ -56,6 +56,7 @@ function addBook(e)
     else
     {
         alert("wrong input")
+        dialog.close()
     }
 
     showBooks();
@@ -93,7 +94,6 @@ function showBooks()
         }
 }
 
-
 //chnage read status of a book
 function changeRead(e)
 {
@@ -120,12 +120,9 @@ function deleteBook(e)
     
 }
 
-function validateInput(title, author, nbOfPages, read)
+function validateInput(title, author, nbOfPages) 
 {
-    if(title == "" || 
-        author == "" || 
-        nbOfPages == "" || 
-        read == "")
+    if(title == "" || author == "" || nbOfPages == "") //read is checked by default
         return false
 
     return true;
