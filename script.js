@@ -17,15 +17,12 @@ Book.prototype.toggleRead = function()
 
 formButton = document.querySelector(".showFormButton")
 dialog = document.querySelector("dialog")
-deleteButton = document.querySelector(".deleteButton")
-changeReadButton = document.querySelector(".changeRead")
+
 addBookButton = document.querySelector(".addBookButton")
 bookForm = document.querySelector(".bookForm")
 booksContainer = document.querySelector(".booksContainer")
 
 formButton.addEventListener("click", showForm)
-deleteButton.addEventListener("click", deleteBook)
-changeReadButton.addEventListener("click", changeRead)
 addBookButton.addEventListener("click", addBook)
 
 
@@ -45,7 +42,7 @@ function addBook(e)
     title = bookForm.elements["title"].value
     author = bookForm.elements["author"].value
     nbOfPages = bookForm.elements["nbOfPages"].value
-    read = bookForm.elements["read"].value
+    read = bookForm.elements["read"].value == "true" ? true : false //it is coming as a string but will store it as a boolean
     
     if(validateInput(title, author, nbOfPages, read))
         {
@@ -76,15 +73,23 @@ function showBooks()
     for(let i = 0; i <library.length; i++)
         {
             bookCard = booksContainer.querySelector("#bookCardStructure").cloneNode(true)
-
+            
+            //set info
             bookCard.setAttribute("data-attribute", i)
             bookCard.querySelector(".title").textContent = library[i]['title']
             bookCard.querySelector(".author").textContent = library[i]['author']
             bookCard.querySelector(".pages").textContent = library[i]['pages']
-            bookCard.querySelector(".read").textContent = library[i]['read']
+            bookCard.querySelector(".read").textContent = library[i]['read'] ? "Yes" : "No";
 
+            //display it
             bookCard.style.display = "grid"
             booksContainer.append(bookCard);
+
+            //add eventlisteners
+            deleteButton = bookCard.querySelector(".deleteButton")
+            changeReadButton = bookCard.querySelector(".changeRead")
+            deleteButton.addEventListener("click", deleteBook)
+            changeReadButton.addEventListener("click", changeRead)
         }
 }
 
@@ -93,12 +98,12 @@ function showBooks()
 function changeRead(e)
 {
     //change status in bookCard
-    book = e.target.parentElement.parentElement // changeButton => <div class ="options"> => <div class ="bookCard">
-    readStatus = book.querySelector(".read")
-    readStatus.textContent = "Yes" ? readStatus.textContent == "No" : "No"
+    let bookCard = e.target.closest('.bookCard');
+    readStatus = bookCard.querySelector(".read")
+    readStatus.textContent = readStatus.textContent == "No" ? "Yes" : "No"
 
     //change status in library
-    bookIndex = book.getAttribute("data-attribute");
+    bookIndex = bookCard.getAttribute("data-attribute");
     library[bookIndex].toggleRead()
 }
 
@@ -106,11 +111,11 @@ function changeRead(e)
 function deleteBook(e)
 {
     //delete book in the booksContainer
-    book = e.target.parentElement.parentElement // changeButton => <div class ="options"> => <div class ="bookCard">
-    booksContainer.removeChild(book)
+    let bookCard = e.target.closest('.bookCard');
+    booksContainer.removeChild(bookCard)
 
     //delete book in library
-    bookIndex = book.getAttribute("data-attribute");
+    bookIndex = bookCard.getAttribute("data-attribute");
     library.splice(bookIndex, 1)
     
 }
