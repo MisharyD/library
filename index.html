@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Library</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class = "heading">Library</div>
+    <button class="showFormButton">+</button>
+    <div class = "booksContainer">
+        <div class ="bookCard" id="bookCardStructure">
+            <div class="title">Title</div>
+            <div class="author">Author</div>
+            <div class="pages">Pages</div>
+            <div class="read">Read</div>
+            <div>Options</div>
+        </div>
+        <div class ="bookCard" id="bookCardStructure" style = "display:None">
+            <div class="title">Something</div>
+            <div class="author">Me</div>
+            <div class="pages">100</div>
+            <div class="read">Yes</div>
+            <div class = "options">
+                <svg class = "deleteIcon"style = "width: 30px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <path d="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z" />
+                </svg>
+
+                <button class = "changeRead">Change read status</button>
+            </div>
+        </div>
+    </div>
+    <dialog>
+        <form class = "bookForm">
+            <div class = "inputAndLabelContainer">
+                <label for="author">Author:</label>
+                <input id = "author" type="text" name = "author">
+            </div>
+
+            <div class = "inputAndLabelContainer">
+                <label for = "title">Title:</label>
+                <input id = "title" type="text" name = "title" >
+            </div>
+
+            <div class = "inputAndLabelContainer">
+                <label for="nbOfPages">Number of pages:</label>
+                <input id = "nbOfPages" type="number" name = "nbOfPages">
+            </div>
+
+            <div class = "inputAndLabelContainer">
+                <span>Read?</span>
+                <div>
+                    <label for="yes">Yes</label>
+                    <input type = "radio" id = "yes" name = "read" value ="Yes"><br>
+                    <label for="no">No</label>
+                    <input type = "radio" id = "no" name = "read" value ="No">
+                </div>
+            </div>
+
+
+            <button type ="submit" class = "addBookButton">Add book</button>
+            <button formmethod="dialog" type ="submit" class = "cancelBookButton">Cancel</button>
+        </form>
+    </dialog>
+
+
+<script src = "script.js">
+    
+
+</script>
+
+</body>
+</html>
