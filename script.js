@@ -1,17 +1,20 @@
 const library = [];
 
-function Book(title, author, pages, read) {
-  this.author = author;
-  this.title = title;
-  this.pages = pages;
-  this.read = read;
-}
-
-Book.prototype.toggleRead = function()
+class Book 
 {
-    read = true ? read == false : false
-}
+    constructor(title, author, pages, read)
+    {
+        this.author = author;
+        this.title = title;
+        this.pages = pages;
+        this.read = read;
+    }
 
+    toggleRead()
+    {
+        this.read = true ? this.read == false : this.false
+    }
+}
 
 //add eventListeners and get elements
 
@@ -25,8 +28,6 @@ booksContainer = document.querySelector(".booksContainer")
 formButton.addEventListener("click", showForm)
 addBookButton.addEventListener("click", addBook)
 
-
-//functions
 
 function showForm()
 {
@@ -47,7 +48,7 @@ function addBook(e)
     if(validateInput(title, author, nbOfPages, read))
         {
             
-            book = new Book(title, author, nbOfPages, read)
+            let book = new Book(title, author, nbOfPages, read)
             library.push(book);
 
             bookForm.reset()
